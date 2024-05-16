@@ -9,9 +9,10 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 contract NFT is ERC721, Ownable{
     using Counters for Counters.Counter;
     using Strings for uint256;
+    address public marketplaceAddress;
     Counters.Counter private _tokenIdCounter;
 
-    constructor() 
+    constructor(address _marketplaceAddress) 
         ERC721("KienNFT", "KNFT")
     {}
 
@@ -23,6 +24,7 @@ contract NFT is ERC721, Ownable{
         uint256 tokenId = _tokenIdCounter.current() + 1;
         _tokenIdCounter.increment();
         _mint(to, tokenId); 
+        setApprovalForAll(marketplaceAddress, true);
     }
 
     function burn(uint256 tokenId) public onlyOwner {
